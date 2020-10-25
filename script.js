@@ -9,9 +9,40 @@ let toDoData = [
     
 ];
 
+// const createData = function(item){
+//         const li = document.createElement('li');
+//         li.classList.add('todo-item');
+
+//         li.innerHTML = '<span class="text-todo">' + item.value + '</span>' +
+//             '<div class="todo-buttons">' + 
+//                 '<button class="todo-remove"></button>' +
+//                 '<button class="todo-complete"></button>' + 
+//             '</div>';
+
+//         if(item.completed){
+//             todoCompleted.append(li)
+//         } else{
+//             todoList.append(li);
+//         }
+        
+//         const btnTodoCompleted = li.querySelector('.todo-complete');
+//         btnTodoCompleted.addEventListener('click', function(){
+//             item.completed = !item.completed;
+//             render();
+//         });
+
+//         const btnTodoRemove = li.querySelector('.todo-remove');
+//         btnTodoRemove.addEventListener('click', function(){
+//             li.remove()
+//         });
+
+// };
+
 const render = function(){
     todoList.textContent = '';
     todoCompleted.textContent = '';
+
+    //toDoData.forEach(createData(item));
 
     toDoData.forEach(item => {
         const li = document.createElement('li');
@@ -66,13 +97,35 @@ render();
 
 let showList = function(){
     let data = JSON.parse(localStorage.getItem('listItem'));
-    console.log(data);
-    console.log(typeof data);
-    
-    data.forEach(function(item) {
-        console.log(item);
-        //todoCompleted.textContent(item)
+
+    data.forEach(item => {
+        const li = document.createElement('li');
+        li.classList.add('todo-item');
+
+        li.innerHTML = '<span class="text-todo">' + item.value + '</span>' +
+            '<div class="todo-buttons">' + 
+                '<button class="todo-remove"></button>' +
+                '<button class="todo-complete"></button>' + 
+            '</div>';
+
+        if(item.completed){
+            todoCompleted.append(li)
+        } else{
+            todoList.append(li);
+        }
+        
+        const btnTodoCompleted = li.querySelector('.todo-complete');
+        btnTodoCompleted.addEventListener('click', function(){
+            item.completed = !item.completed;
+            render();
+        });
+
+        const btnTodoRemove = li.querySelector('.todo-remove');
+        btnTodoRemove.addEventListener('click', function(){
+            li.remove()
+        });
     });
+    //data.forEach(createData());
 }
 
 showList();
