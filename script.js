@@ -7,28 +7,28 @@ const todoControl = document.querySelector('.todo-control'),
 
 let toDoData = [];
 
-const createData = function(){
-    toDoData.forEach(item => {
-        const li = createItem(item);
+// const createData = function(){
+//     toDoData.forEach(item => {
+//         const li = createItem(item);
         
-        const btnTodoCompleted = li.querySelector('.todo-complete');
-        btnTodoCompleted.addEventListener('click', function(){
-            item.completed = !item.completed;
-            render();
-        });
+//         const btnTodoCompleted = li.querySelector('.todo-complete');
+//         btnTodoCompleted.addEventListener('click', function(){
+//             item.completed = !item.completed;
+//             render();
+//         });
 
-        const btnTodoRemove = li.querySelector('.todo-remove');
-        btnTodoRemove.addEventListener('click', function(){
-            li.remove();
-            for( let i = 0; i < toDoData.length; i++){ 
-                if ( toDoData[i] === item) { 
-                    toDoData.splice(i, 1); 
-            }}
-        });
+//         const btnTodoRemove = li.querySelector('.todo-remove');
+//         btnTodoRemove.addEventListener('click', function(){
+//             li.remove();
+//             for( let i = 0; i < toDoData.length; i++){ 
+//                 if ( toDoData[i] === item) { 
+//                     toDoData.splice(i, 1); 
+//             }}
+//         });
 
-    });
-    return toDoData;
-};
+//     });
+//     return toDoData;
+// };
 
 function createItem(item){
     const li = document.createElement('li');
@@ -52,28 +52,27 @@ const render = function(){
     todoList.textContent = '';
     todoCompleted.textContent = '';
 
-    //toDoData.forEach(createData(item));
-    createData()
+    //createData()
 
-    // toDoData.forEach(item => {
-    //     const li = createItem(item);
+    toDoData.forEach(item => {
+        const li = createItem(item);
         
-    //     const btnTodoCompleted = li.querySelector('.todo-complete');
-    //     btnTodoCompleted.addEventListener('click', function(){
-    //         item.completed = !item.completed;
-    //         render();
-    //     });
+        const btnTodoCompleted = li.querySelector('.todo-complete');
+        btnTodoCompleted.addEventListener('click', function(){
+            item.completed = !item.completed;
+            render();
+        });
 
-    //     const btnTodoRemove = li.querySelector('.todo-remove');
-    //     btnTodoRemove.addEventListener('click', function(){
-    //         li.remove();
-    //         for( let i = 0; i < toDoData.length; i++){ 
-    //             if ( toDoData[i] === item) { 
-    //                 toDoData.splice(i, 1); 
-    //         }}
-    //     });
+        const btnTodoRemove = li.querySelector('.todo-remove');
+        btnTodoRemove.addEventListener('click', function(){
+            li.remove();
+            for( let i = 0; i < toDoData.length; i++){ 
+                if ( toDoData[i] === item) { 
+                    toDoData.splice(i, 1); 
+            }}
+        });
 
-    // });
+    });
 
 };
 
@@ -98,29 +97,29 @@ todoControl.addEventListener('submit', function(event){
 
 let showList = function(){
     let data = JSON.parse(localStorage.getItem('listItem'));
-    toDoData.push(data)
+    //toDoData.push(data)
     
 
-    // data.forEach(item => {
-    //     const li = createItem(item);
+    data.forEach(item => {
+        const li = createItem(item);
         
-    //     const btnTodoCompleted = li.querySelector('.todo-complete');
-    //     btnTodoCompleted.addEventListener('click', function(){
-    //         item.completed = !item.completed;
-    //         render();
-    //     });
+        const btnTodoCompleted = li.querySelector('.todo-complete');
+        btnTodoCompleted.addEventListener('click', function(){
+            item.completed = !item.completed;
+            render();
+        });
 
-    //     const btnTodoRemove = li.querySelector('.todo-remove');
-    //     btnTodoRemove.addEventListener('click', function(){
-    //         li.remove();
-    //         for( let i = 0; i < toDoData.length; i++){ 
-    //             if ( toDoData[i] === item) { 
-    //                 toDoData.splice(i, 1); 
-    //         }}
-    //     });
-    // });
-    //data.forEach(createData(item));
-    createData();
+        const btnTodoRemove = li.querySelector('.todo-remove');
+        btnTodoRemove.addEventListener('click', function(){
+            li.remove();
+            for( let i = 0; i < toDoData.length; i++){ 
+                if ( toDoData[i] === item) { 
+                    toDoData.splice(i, 1); 
+            }}
+        });
+    });
+    
+    //createData();
 }
 
 showList();
