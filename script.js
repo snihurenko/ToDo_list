@@ -7,29 +7,6 @@ const todoControl = document.querySelector('.todo-control'),
 
 let toDoData = [];
 
-// const createData = function(){
-//     toDoData.forEach(item => {
-//         const li = createItem(item);
-        
-//         const btnTodoCompleted = li.querySelector('.todo-complete');
-//         btnTodoCompleted.addEventListener('click', function(){
-//             item.completed = !item.completed;
-//             render();
-//         });
-
-//         const btnTodoRemove = li.querySelector('.todo-remove');
-//         btnTodoRemove.addEventListener('click', function(){
-//             li.remove();
-//             for( let i = 0; i < toDoData.length; i++){ 
-//                 if ( toDoData[i] === item) { 
-//                     toDoData.splice(i, 1); 
-//             }}
-//         });
-
-//     });
-//     return toDoData;
-// };
-
 function createItem(item){
     const li = document.createElement('li');
     li.classList.add('todo-item');
@@ -40,19 +17,23 @@ function createItem(item){
             '<button class="todo-complete"></button>' + 
         '</div>';
 
+    checkItem(item, li)
+    return li
+};
+
+function checkItem(item, li){
     if(item.completed){
         todoCompleted.append(li)
     } else{
         todoList.append(li);
     }
     return li
-};
+}
+
 
 const render = function(){
     todoList.textContent = '';
     todoCompleted.textContent = '';
-
-    //createData()
 
     toDoData.forEach(item => {
         const li = createItem(item);
@@ -85,41 +66,41 @@ todoControl.addEventListener('submit', function(event){
             completed: false
         };
         toDoData.push(newToDo);
-        console.log(newToDo);
         localStorage.setItem('listItem', JSON.stringify(toDoData));
     }
-    
     headerInput.value = '';
-    console.log(toDoData);
-    render();
-});
 
+
+});
 
 let showList = function(){
     let data = JSON.parse(localStorage.getItem('listItem'));
-    //toDoData.push(data)
+
     
 
     data.forEach(item => {
-        const li = createItem(item);
-        
-        const btnTodoCompleted = li.querySelector('.todo-complete');
-        btnTodoCompleted.addEventListener('click', function(){
-            item.completed = !item.completed;
-            render();
-        });
 
-        const btnTodoRemove = li.querySelector('.todo-remove');
-        btnTodoRemove.addEventListener('click', function(){
-            li.remove();
-            for( let i = 0; i < toDoData.length; i++){ 
-                if ( toDoData[i] === item) { 
-                    toDoData.splice(i, 1); 
-            }}
-        });
+        const li = createItem(item);
+        checkItem(item, li);
+
+        // const li = createItem(item);
+        
+        // const btnTodoCompleted = li.querySelector('.todo-complete');
+        // btnTodoCompleted.addEventListener('click', function(){
+        //     item.completed = !item.completed;
+        //     //render();
+        // });
+
+        // const btnTodoRemove = li.querySelector('.todo-remove');
+        // btnTodoRemove.addEventListener('click', function(){
+        //     li.remove();
+        //     for( let i = 0; i < toDoData.length; i++){ 
+        //         if ( toDoData[i] === item) { 
+        //             toDoData.splice(i, 1); 
+        //     }}
+        // });
     });
     
-    //createData();
 }
 
 showList();
