@@ -5,38 +5,54 @@ const todoControl = document.querySelector('.todo-control'),
     todoList = document.querySelector('.todo-list'),
     todoCompleted = document.querySelector('.todo-completed');
 
-let toDoData = [
-    
-];
+let toDoData = [];
 
 // const createData = function(item){
-//         const li = document.createElement('li');
-//         li.classList.add('todo-item');
+//     const li = document.createElement('li');
+//     li.classList.add('todo-item');
 
-//         li.innerHTML = '<span class="text-todo">' + item.value + '</span>' +
-//             '<div class="todo-buttons">' + 
-//                 '<button class="todo-remove"></button>' +
-//                 '<button class="todo-complete"></button>' + 
-//             '</div>';
+//     li.innerHTML = '<span class="text-todo">' + item.value + '</span>' +
+//         '<div class="todo-buttons">' + 
+//             '<button class="todo-remove"></button>' +
+//             '<button class="todo-complete"></button>' + 
+//         '</div>';
 
-//         if(item.completed){
-//             todoCompleted.append(li)
-//         } else{
-//             todoList.append(li);
-//         }
+//     if(item.completed){
+//          todoCompleted.append(li)
+//     } else{
+//         todoList.append(li);
+//     }
         
-//         const btnTodoCompleted = li.querySelector('.todo-complete');
-//         btnTodoCompleted.addEventListener('click', function(){
-//             item.completed = !item.completed;
-//             render();
-//         });
+//     const btnTodoCompleted = li.querySelector('.todo-complete');
+//     btnTodoCompleted.addEventListener('click', function(){
+//         item.completed = !item.completed;
+//         render();
+//     });
 
-//         const btnTodoRemove = li.querySelector('.todo-remove');
-//         btnTodoRemove.addEventListener('click', function(){
-//             li.remove()
-//         });
-
+//     const btnTodoRemove = li.querySelector('.todo-remove');
+//     btnTodoRemove.addEventListener('click', function(){
+//         li.remove()
+//     });
+//     return item
 // };
+
+function createItem(item){
+    const li = document.createElement('li');
+    li.classList.add('todo-item');
+
+    li.innerHTML = '<span class="text-todo">' + item.value + '</span>' +
+        '<div class="todo-buttons">' + 
+            '<button class="todo-remove"></button>' +
+            '<button class="todo-complete"></button>' + 
+        '</div>';
+
+    if(item.completed){
+        todoCompleted.append(li)
+    } else{
+        todoList.append(li);
+    }
+    return li
+};
 
 const render = function(){
     todoList.textContent = '';
@@ -45,20 +61,7 @@ const render = function(){
     //toDoData.forEach(createData(item));
 
     toDoData.forEach(item => {
-        const li = document.createElement('li');
-        li.classList.add('todo-item');
-
-        li.innerHTML = '<span class="text-todo">' + item.value + '</span>' +
-            '<div class="todo-buttons">' + 
-                '<button class="todo-remove"></button>' +
-                '<button class="todo-complete"></button>' + 
-            '</div>';
-
-        if(item.completed){
-            todoCompleted.append(li)
-        } else{
-            todoList.append(li);
-        }
+        const li = createItem(item);
         
         const btnTodoCompleted = li.querySelector('.todo-complete');
         btnTodoCompleted.addEventListener('click', function(){
@@ -68,64 +71,60 @@ const render = function(){
 
         const btnTodoRemove = li.querySelector('.todo-remove');
         btnTodoRemove.addEventListener('click', function(){
-            li.remove()
+            li.remove();
+            for( let i = 0; i < toDoData.length; i++){ 
+                if ( toDoData[i] === item) { 
+                    toDoData.splice(i, 1); 
+            }}
         });
 
     });
+
 };
 
 todoControl.addEventListener('submit', function(event){
     event.preventDefault();
 
-    if (headerInput.value !== ''){
+    if (headerInput.value.trim() !== ''){
         const newToDo = {
             value: headerInput.value,
             completed: false
         };
         toDoData.push(newToDo);
-
+        console.log(newToDo);
         localStorage.setItem('listItem', JSON.stringify(toDoData));
     }
     
     headerInput.value = '';
+    console.log(toDoData);
     render();
 });
 
 
+// let showList = function(){
+//     let data = JSON.parse(localStorage.getItem('listItem'));
+//     console.log(data);
 
-render();
-
-let showList = function(){
-    let data = JSON.parse(localStorage.getItem('listItem'));
-
-    data.forEach(item => {
-        const li = document.createElement('li');
-        li.classList.add('todo-item');
-
-        li.innerHTML = '<span class="text-todo">' + item.value + '</span>' +
-            '<div class="todo-buttons">' + 
-                '<button class="todo-remove"></button>' +
-                '<button class="todo-complete"></button>' + 
-            '</div>';
-
-        if(item.completed){
-            todoCompleted.append(li)
-        } else{
-            todoList.append(li);
-        }
+//     // data.forEach(item => {
+//     //     const li = createItem(item);
         
-        const btnTodoCompleted = li.querySelector('.todo-complete');
-        btnTodoCompleted.addEventListener('click', function(){
-            item.completed = !item.completed;
-            render();
-        });
+//     //     const btnTodoCompleted = li.querySelector('.todo-complete');
+//     //     btnTodoCompleted.addEventListener('click', function(){
+//     //         item.completed = !item.completed;
+//     //         render();
+//     //     });
 
-        const btnTodoRemove = li.querySelector('.todo-remove');
-        btnTodoRemove.addEventListener('click', function(){
-            li.remove()
-        });
-    });
-    //data.forEach(createData());
-}
+//     //     const btnTodoRemove = li.querySelector('.todo-remove');
+//     //     btnTodoRemove.addEventListener('click', function(){
+//     //         li.remove();
+//     //         for( let i = 0; i < toDoData.length; i++){ 
+//     //             if ( toDoData[i] === item) { 
+//     //                 toDoData.splice(i, 1); 
+//     //         }}
+//     //     });
+//     // });
+//     data.forEach(createData(item));
+// }
 
-showList();
+// showList();
+render();
