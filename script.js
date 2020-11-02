@@ -5,14 +5,7 @@ const todoControl = document.querySelector('.todo-control'),
     todoList = document.querySelector('.todo-list'),
     todoCompleted = document.querySelector('.todo-completed');
 
-let toDoData = [];
-
-function initTodoData(){
-    let data = JSON.parse(localStorage.getItem('listItem'));
-    if (data){
-        toDoData = data;
-    }
-};
+let toDoData = localStorage.getItem('listItem') ? JSON.parse(localStorage.getItem('listItem')) : [];
 
 function createItemView(item){
     const li = document.createElement('li');
@@ -82,6 +75,5 @@ todoControl.addEventListener('submit', function(event){
     headerInput.value = '';
 });
 
-initTodoData();
 render();
 
