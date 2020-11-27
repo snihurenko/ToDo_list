@@ -17,11 +17,11 @@ class Todo {
     render() {
         this.todoList.textContent = '';
         this.todoCompleted.textContent = '';
-        this.todoData.forEach(this.createItem);
+        this.todoData.forEach(this.createItem, this);
         this.addToStorage();
     }
 
-    createItem = (todo) => {
+    createItem(todo) {
         const li = document.createElement('li');
         li.classList.add('todo-item');
         li.key = todo.key;
@@ -34,7 +34,7 @@ class Todo {
             </div>
         `);
 
-        if (todo.completed){
+        if (todo.completed) {
             this.todoCompleted.append(li);
         } else {
             this.todoList.append(li);
@@ -43,7 +43,7 @@ class Todo {
 
     addTodo(e) {
         e.preventDefault();
-        if (this.input.value.trim()){
+        if (this.input.value.trim()) {
             const newTodo = {
                 value: this.input.value,
                 completed: false,
@@ -53,37 +53,51 @@ class Todo {
             this.render();
             this.input.value = '';
         } else {
-            alert('Пожалуйста, укажите дело, которое хотите добавить')
+            alert('Пожалуйста, укажите дело, которое хотите добавить');
         }
-        
+
     }
 
     generateKey() {
         return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     }
 
-    deleteItem() {
-        //find elem by key, delete from map and render
-
+    deleteItem(targetKey) {
+        this.todoData.forEach((value, key) => {
+            if (key === targetKey) {
+                this.todoData.delete(key);
+                this.render();
+            }
+        });
     }
 
-    completedItem() {
-        //foreach all tododata and find elem === target and change completed (toggle)
-
+    completedItem(targetKey) {
+        this.todoData.forEach((value, key) => {
+            if (key === targetKey) {
+                if (value.completed) {
+                    value.completed = false;
+                    this.render();
+                } else {
+                    value.completed = true;
+                    this.render();
+                }
+            }
+        });
     }
 
     handler() {
         const container = document.querySelector('.todo-container');
         container.addEventListener('click', event => {
             const target = event.target;
+            const targetKey = target.closest('li').key;
 
-            if (target.matches('.todo-remove')){
-                this.deleteItem();
+            if (target.matches('.todo-remove')) {
+                this.deleteItem(targetKey);
             }
-            if (target.matches('.todo-complete')){
-                this.completedItem();
+            if (target.matches('.todo-complete')) {
+                this.completedItem(targetKey);
             }
-        })
+        });
     }
 
     init() {
